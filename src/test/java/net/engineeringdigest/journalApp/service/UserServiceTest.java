@@ -22,6 +22,7 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
 
+
     @ParameterizedTest
     @ArgumentsSource(UserArgumentsProvider.class)
     public void testSaveNewUser(User user) {
