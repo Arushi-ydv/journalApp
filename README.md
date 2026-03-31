@@ -1,6 +1,6 @@
-# Journal Application
+# Journal Application 🚀
 
-A Spring Boot backend application for managing personal journal entries with automated email notifications.
+A scalable Spring Boot backend application for managing journal entries with automated email notifications and background scheduling.
 
 ## 🚀 Features
 
