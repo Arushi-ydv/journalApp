@@ -4,15 +4,15 @@ spring:
     port: 6379
   data:
     mongodb:
-      uri: mongodb+srv://aarushiyadav231_db_user:Arushi123@cluster0.esu6wdh.mongodb.net/journaldb
+      uri: ${MONGO_URI}
       database: journaldb
       auto-index-creation: true
 
   mail:
     host: smtp.gmail.com
     port: 587
-    username: aarushiyadav231@gmail.com
-    password: ojit mltw dwsv adwj
+    username: ${EMAIL_USER}
+    password: ${EMAIL_PASS}
     properties:
       mail:
         smtp:
