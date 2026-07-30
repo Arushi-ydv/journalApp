@@ -29,3 +29,6 @@ weather:
   api:
     key: ac655909e4fa0d52bb12e2e82eceb9e5
 
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRATION:86400000}

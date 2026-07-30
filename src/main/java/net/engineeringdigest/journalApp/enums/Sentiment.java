@@ -8,5 +8,5 @@ public enum Sentiment {
 
     ANGRY,
 
-    ANXIOUS;
+    ANXIOUS
 }
