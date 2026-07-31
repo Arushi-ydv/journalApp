@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.arushi</groupId>
-	<artifactId>journalApp</artifactId>
+	<artifactId>journal-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Journal App</name>
-	<description>E2EE Journal App</description>
+	<name>Journal App Backend</name>
+	<description>Secure Journal Management REST API built with Spring Boot, MongoDB, JWT Authentication, Redis Caching and Swagger</description>
 	<url/>
 	<licenses>
 		<license/>
