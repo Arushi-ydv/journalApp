@@ -103,6 +103,6 @@ http://localhost:8080/journal/swagger-ui/index.html
 
 ## 👩‍💻 Author
 
-**Aarushi Yadav**
+**Arushi Yadav**
 
 GitHub: https://github.com/Arushi-ydv
