@@ -1,6 +1,6 @@
 # Journal Application 🚀
 
-A Spring Boot backend application for managing personal journal entries with JWT-based authentication, MongoDB integration, Redis caching, automated email notifications, background scheduling, and interactive API documentation using Swagger OpenAPI.
+A secure REST API for personal journal management built with Spring Boot. The application enables users to create and manage journal entries securely using JWT-based authentication and role-based authorization. It also integrates MongoDB, Redis caching, email scheduling, weather information, sentiment analysis, and interactive API documentation using Swagger OpenAPI.
 
 ---
 
@@ -8,13 +8,17 @@ A Spring Boot backend application for managing personal journal entries with JWT
 
 - User Registration & Login
 - JWT-based Authentication & Authorization
+- Role-Based Access Control (User/Admin)
 - Secure Password Encryption using BCrypt
 - CRUD Operations for Journal Entries
-- MongoDB Integration
+- MongoDB Atlas Integration
 - Redis Caching
+- Weather API Integration
+- Sentiment Analysis for Journal Entries
 - Automated Email Notifications
 - Background Task Scheduling
-- RESTful API Design
+- Global Exception Handling
+- Request Validation
 - Interactive API Documentation using Swagger OpenAPI
 - Layered Architecture (Controller → Service → Repository)
 
@@ -23,96 +27,82 @@ A Spring Boot backend application for managing personal journal entries with JWT
 ## 🛠️ Tech Stack
 
 - Java 21
-- Spring Boot
+- Spring Boot 3
 - Spring Security
 - JWT (JSON Web Token)
-- MongoDB
+- Spring Data MongoDB
+- MongoDB Atlas
 - Redis
 - Swagger OpenAPI
 - Maven
-- JUnit
+- Lombok
 
 ---
 
 ## 🔐 Security
 
-- JWT Authentication
+- JWT Authentication & Authorization
+- Role-Based Access Control (User/Admin)
 - Stateless Session Management
-- Spring Security
-- BCrypt Password Encoding
-- Protected REST APIs
-
----
-
-## 📖 API Documentation
-
-After running the application, access the API documentation at:
-
-### Swagger UI
-
-```text
-http://localhost:8080/journal/swagger-ui/index.html
-```
-
-### OpenAPI JSON
-
-```text
-http://localhost:8080/journal/v3/api-docs
-```
+- BCrypt Password Encryption
+- Protected REST APIs using Spring Security
 
 ---
 
 ## 📂 Project Structure
 
-- Controller Layer
-- Service Layer
-- Repository Layer
-- Security (JWT & Spring Security)
-- Configuration
-- Scheduler
-- Redis Cache
-- Email Service
-- MongoDB Database
+```text
+src
+├── controller
+├── service
+├── repository
+├── entity
+├── dto
+├── config
+├── scheduler
+├── cache
+├── exception
+├── enums
+├── constraints
+└── utilis
+```
 
----
+## ⚙️ Getting Started
 
-## ⚙️ How to Run
-
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Arushi-ydv/journalApp.git
 ```
 
-### 2. Configure the following environment variables
+### 2. Configure the Application
 
-```text
-MONGO_URI
-JWT_SECRET
-EMAIL_USER
-EMAIL_PASS
-```
+Update the required configuration values in your `application.yml` or `application.properties` file:
 
-### 3. Run the application
+- MongoDB Atlas URI
+- Redis Configuration
+- JWT Secret Key
+- Email Credentials
+- Weather API Key
 
-Run the `JournalApplication.java` file or use Maven:
+### 3. Build and Run
+
+Using Maven:
 
 ```bash
 mvn spring-boot:run
 ```
 
-### 4. Open Swagger UI
+Or run the `JournalApplication.java` file directly from your IDE.
+
+### 4. Access Swagger UI
 
 ```text
 http://localhost:8080/journal/swagger-ui/index.html
 ```
 
----
-
 ## 👩‍💻 Author
 
 **Aarushi Yadav**
-
-Aspiring Java Backend Developer
 
 GitHub: https://github.com/Arushi-ydv
