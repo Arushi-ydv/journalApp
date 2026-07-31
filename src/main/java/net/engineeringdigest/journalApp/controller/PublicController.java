@@ -1,8 +1,12 @@
 package net.engineeringdigest.journalApp.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import net.engineeringdigest.journalApp.dto.LoginRequest;
+import net.engineeringdigest.journalApp.dto.LoginResponse;
+import net.engineeringdigest.journalApp.dto.SignupRequest;
+import net.engineeringdigest.journalApp.dto.SignupResponse;
 import net.engineeringdigest.journalApp.entity.User;
-import net.engineeringdigest.journalApp.service.EmailService;
 import net.engineeringdigest.journalApp.service.UserDetailsServiceImpl;
 import net.engineeringdigest.journalApp.service.UserService;
 import net.engineeringdigest.journalApp.utilis.JwtUtil;
@@ -31,30 +35,47 @@ public class PublicController {
     @Autowired
     private JwtUtil jwtUtil;
 
-//    @Autowired
-//    private EmailService emailService;
-
     @GetMapping("/health-check")
     public String healthCheck(){
         return "OK";
     }
 
     @PostMapping("/signup")
-    public void signup(@RequestBody User user) {
-         userService.saveNewUser(user);
+    public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
+
+        User user = new User();
+
+        user.setUserName(request.getUserName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+
+        userService.saveNewUser(user);
+
+        SignupResponse response = new SignupResponse();
+        response.setMessage("User Registered Successfully");
+        response.setUserName(user.getUserName());
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         try{
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
-            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
-           String jwt = jwtUtil.generateToken(userDetails);
-           return new ResponseEntity<>(jwt, HttpStatus.OK);
+                    new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));
+            UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUserName());
+            String jwt = jwtUtil.generateToken(userDetails);
+
+            LoginResponse response = new LoginResponse();
+
+            response.setMessage("Login Successful");
+            response.setToken(jwt);
+            response.setType("Bearer");
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch(Exception e){
             log.error("Exception occured while createAuthenticationToken ", e);
-            return new ResponseEntity<>("Incorrect Username or password", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }

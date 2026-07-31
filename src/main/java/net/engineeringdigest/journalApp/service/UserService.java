@@ -1,16 +1,12 @@
 package net.engineeringdigest.journalApp.service;
 
 import lombok.extern.slf4j.Slf4j;
-import net.engineeringdigest.journalApp.controller.JournalEntryController;
 import net.engineeringdigest.journalApp.entity.User;
+import net.engineeringdigest.journalApp.exception.UserAlreadyExistsException;
 import net.engineeringdigest.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -24,25 +20,28 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    public boolean saveNewUser(User user) {
-        try{
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRoles(Arrays.asList("USER"));
-            userRepository.save(user);
-            return true;
-        } catch(Exception e) {
-            log.error("Error occured for {} :",user.getUserName(), e);
-            log.warn("hahahaha");
-            log.info("hahahaha");
-            log.debug("hahahaha");
-            log.trace("hahahaha");
-            return false;
+    public void saveNewUser(User user) {
+
+        User existingUser = userRepository.findByUserName(user.getUserName());
+
+        if(existingUser != null){
+            throw new UserAlreadyExistsException("Username already exists");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Arrays.asList("USER"));
+        user.setSentimentAnalysis(false);
+        userRepository.save(user);
     }
 
     public void saveAdmin(User user) {
+
+        User existingUser = userRepository.findByUserName(user.getUserName());
+        if(existingUser != null) {
+            throw new UserAlreadyExistsException("Username already exists");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER","ADMIN"));
         userRepository.save(user);
@@ -71,6 +70,10 @@ public class UserService {
     public User findByUserName(String userName) {
 
         return userRepository.findByUserName(userName);
+    }
+
+    public void deleteByUserName(String userName) {
+        userRepository.deleteByUserName(userName);
     }
 }
 

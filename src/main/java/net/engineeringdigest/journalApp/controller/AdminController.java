@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,15 +27,17 @@ public class AdminController {
         if(all != null && !all.isEmpty()) {
             return new ResponseEntity<>(all, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(Collections.emptyList(),HttpStatus.OK);
     }
 
     @PostMapping("/create-admin-user")
-    public void createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+
         userService.saveAdmin(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("clear-app-cache")
+    @PostMapping("clear-app-cache")
     public void clearAppCache() {
         appCache.init();
     }

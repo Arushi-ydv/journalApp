@@ -7,7 +7,6 @@ import net.engineeringdigest.journalApp.enums.Sentiment;
 import net.engineeringdigest.journalApp.repository.UserRepositoryImpl;
 import net.engineeringdigest.journalApp.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -25,9 +24,6 @@ public class UserScheduler {
 
     @Autowired
     private UserRepositoryImpl userRepository;
-
-    @Autowired
-    private AppCache appCache;
 
 //    @Scheduled(cron = "0 0 9 ? * SUN")
     public void fetchUsersAndSendSaMail() {
@@ -49,7 +45,7 @@ public class UserScheduler {
                 }
             }
             if(mostFrequentSentiment != null) {
-                emailService.sendEmail(user.getEmail(), "Sentiment fro last 7 days", mostFrequentSentiment.toString());
+                emailService.sendEmail(user.getEmail(), "Sentiment for last 7 days", mostFrequentSentiment.toString());
             }
         }
     }

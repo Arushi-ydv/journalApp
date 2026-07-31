@@ -1,7 +1,7 @@
 package net.engineeringdigest.journalApp.controller;
 
 
-import net.engineeringdigest.journalApp.api.response.WeatherResponse;
+import net.engineeringdigest.journalApp.dto.response.WeatherResponse;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.UserRepository;
 import net.engineeringdigest.journalApp.service.UserService;
@@ -28,30 +28,38 @@ public class UserController {
 
     @PutMapping()
     public ResponseEntity<?> updateUser(@RequestBody User user) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
+        String userName = getLoggedInUserName();
         User userInDb = userService.findByUserName(userName);
-        userInDb.setUserName(user.getUserName());
-        userInDb.setPassword(user.getPassword());
+
+        if(user.getUserName() != null && !user.getUserName().isBlank()) {
+            userInDb.setUserName(user.getUserName());
+        }
+        if(user.getPassword() != null && !user.getPassword().isBlank()) {
+            userInDb.setPassword(user.getPassword());
+        }
+
         userService.saveNewUser(userInDb);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping()
     public ResponseEntity<?> deleteUserById(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        userRepository.deleteByUserName(authentication.getName());
+        userRepository.deleteByUserName(getLoggedInUserName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping()
     public ResponseEntity<?> greeting(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         WeatherResponse weatherResponse = weatherService.getWeather("Mumbai");
         String greeting = "";
         if(weatherResponse != null) {
             greeting = ", weather feels like " + weatherResponse.getCurrent().getFeelslike();
         }
-        return new ResponseEntity<>("Hi " + authentication.getName() + greeting, HttpStatus.OK);
+        return new ResponseEntity<>("Hi " + getLoggedInUserName() + greeting, HttpStatus.OK);
+    }
+
+    private String getLoggedInUserName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
     }
 }

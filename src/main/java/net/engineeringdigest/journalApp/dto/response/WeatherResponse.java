@@ -1,4 +1,4 @@
-package net.engineeringdigest.journalApp.api.response;
+package net.engineeringdigest.journalApp.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class WeatherResponse{
 
-    private Current current;
+    private static Current current;
 
     @Getter
     @Setter
