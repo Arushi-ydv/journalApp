@@ -24,8 +24,9 @@ public class UserScheduler {
     @Autowired
     private UserRepositoryImpl userRepository;
 
-//    @Scheduled(cron = "0 0 9 ? * SUN")
+
     public void fetchUsersAndSendSaMail() {
+
         List<User> users = userRepository.getUserForSA();
         for (User user : users) {
             List<JournalEntry> journalEntries = user.getJournalEntries();

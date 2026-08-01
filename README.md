@@ -1,6 +1,6 @@
 # Journal Application 🚀
 
-A secure REST API for personal journal management built with Spring Boot. The application enables users to create and manage journal entries securely using JWT-based authentication and role-based authorization. It also integrates MongoDB, Redis caching, email scheduling, weather information, sentiment analysis, and interactive API documentation using Swagger OpenAPI.
+A secure RESTful backend application for managing personal journal entries built with Spring Boot. The application provides JWT-based authentication, role-based authorization, journal management APIs, request validation, global exception handling, email notification support, and interactive API documentation using Swagger OpenAPI.
 
 ---
 
@@ -12,13 +12,9 @@ A secure REST API for personal journal management built with Spring Boot. The ap
 - Secure Password Encryption using BCrypt
 - CRUD Operations for Journal Entries
 - MongoDB Atlas Integration
-- Redis Caching
-- Weather API Integration
-- Sentiment Analysis for Journal Entries
-- Automated Email Notifications
-- Background Task Scheduling
-- Global Exception Handling
+- Email Notification Support
 - Request Validation
+- Global Exception Handling
 - Interactive API Documentation using Swagger OpenAPI
 - Layered Architecture (Controller → Service → Repository)
 
@@ -32,7 +28,6 @@ A secure REST API for personal journal management built with Spring Boot. The ap
 - JWT (JSON Web Token)
 - Spring Data MongoDB
 - MongoDB Atlas
-- Redis
 - Swagger OpenAPI
 - Maven
 - Lombok
@@ -41,11 +36,11 @@ A secure REST API for personal journal management built with Spring Boot. The ap
 
 ## 🔐 Security
 
-- JWT Authentication & Authorization
-- Role-Based Access Control (User/Admin)
+- JWT Authentication
+- Role-Based Authorization
 - Stateless Session Management
 - BCrypt Password Encryption
-- Protected REST APIs using Spring Security
+- Protected REST APIs
 
 ---
 
@@ -53,19 +48,19 @@ A secure REST API for personal journal management built with Spring Boot. The ap
 
 ```text
 src
-├── controller
-├── service
-├── repository
-├── entity
-├── dto
 ├── config
-├── scheduler
-├── cache
-├── exception
+├── controller
+├── dto
+├── entity
 ├── enums
-├── constraints
+├── exception
+├── repository
+├── scheduler
+├── service
 └── utilis
 ```
+
+---
 
 ## ⚙️ Getting Started
 
@@ -75,15 +70,15 @@ src
 git clone https://github.com/Arushi-ydv/journalApp.git
 ```
 
-### 2. Configure the Application
+### 2. Configure Environment Variables
 
-Update the required configuration values in your `application.yml` or `application.properties` file:
+Configure the following environment variables:
 
-- MongoDB Atlas URI
-- Redis Configuration
-- JWT Secret Key
-- Email Credentials
-- Weather API Key
+- `MONGO_URI`
+- `JWT_SECRET`
+- `JWT_EXPIRATION`
+- `EMAIL_USER`
+- `EMAIL_PASS`
 
 ### 3. Build and Run
 
@@ -95,11 +90,33 @@ mvn spring-boot:run
 
 Or run the `JournalApplication.java` file directly from your IDE.
 
-### 4. Access Swagger UI
+---
+
+## 📖 API Documentation
+
+After starting the application, access Swagger UI:
 
 ```text
 http://localhost:8080/journal/swagger-ui/index.html
 ```
+
+OpenAPI Specification:
+
+```text
+http://localhost:8080/journal/v3/api-docs
+```
+
+---
+
+## 📌 Future Improvements
+
+- DTO Refactoring for all APIs
+- Pagination & Sorting
+- Search APIs
+- Docker Support
+- Cloud Deployment
+
+---
 
 ## 👩‍💻 Author
 

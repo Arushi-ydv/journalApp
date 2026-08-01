@@ -1,11 +1,8 @@
 package com.arushi.journalapp.controller;
 
-
-import com.arushi.journalapp.dto.response.WeatherResponse;
 import com.arushi.journalapp.entity.User;
 import com.arushi.journalapp.repository.UserRepository;
 import com.arushi.journalapp.service.UserService;
-import com.arushi.journalapp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +19,6 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private WeatherService weatherService;
 
     @PutMapping()
     public ResponseEntity<?> updateUser(@RequestBody User user) {
@@ -49,13 +43,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> greeting(){
-        WeatherResponse weatherResponse = weatherService.getWeather("Mumbai");
-        String greeting = "";
-        if(weatherResponse != null) {
-            greeting = ", weather feels like " + weatherResponse.getCurrent().getFeelslike();
-        }
-        return new ResponseEntity<>("Hi " + getLoggedInUserName() + greeting, HttpStatus.OK);
+    public ResponseEntity<?> greeting() {
+        return ResponseEntity.ok("Welcome " + getLoggedInUserName());
     }
 
     private String getLoggedInUserName() {

@@ -12,7 +12,7 @@
 	<artifactId>journal-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Journal App Backend</name>
-	<description>Secure Journal Management REST API built with Spring Boot, MongoDB, JWT Authentication, Redis Caching and Swagger</description>
+	<description>Secure Journal Management REST API built with Spring Boot, MongoDB, JWT Authentication, Email Scheduler and Swagger OpenAPI</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -58,10 +58,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
