@@ -57,7 +57,7 @@ src
 ├── repository
 ├── scheduler
 ├── service
-└── utilis
+└── utils
 ```
 
 ---

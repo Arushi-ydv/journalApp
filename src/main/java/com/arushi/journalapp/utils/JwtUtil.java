@@ -1,4 +1,4 @@
-package com.arushi.journalapp.utilis;
+package com.arushi.journalapp.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
