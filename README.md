@@ -1,6 +1,6 @@
 # Journal Application 🚀
 
-A secure RESTful backend application for managing personal journal entries built with Spring Boot. The application provides JWT-based authentication, role-based authorization, journal management APIs, request validation, global exception handling, email notification support, and interactive API documentation using Swagger OpenAPI.
+A secure RESTful backend application for managing personal journal entries built with Spring Boot. The application provides JWT-based authentication, role-based authorization, journal management APIs, request validation, global exception handling, and interactive API documentation using Swagger OpenAPI.
 
 ---
 
@@ -11,8 +11,7 @@ A secure RESTful backend application for managing personal journal entries built
 - Role-Based Access Control (User/Admin)
 - Secure Password Encryption using BCrypt
 - CRUD Operations for Journal Entries
-- MongoDB Atlas Integration
-- Email Notification Support
+- MySQL Database Integration using Spring Data JPA
 - Request Validation
 - Global Exception Handling
 - Interactive API Documentation using Swagger OpenAPI
@@ -25,9 +24,10 @@ A secure RESTful backend application for managing personal journal entries built
 - Java 21
 - Spring Boot 3
 - Spring Security
+- Spring Data JPA
+- Hibernate
+- MySQL
 - JWT (JSON Web Token)
-- Spring Data MongoDB
-- MongoDB Atlas
 - Swagger OpenAPI
 - Maven
 - Lombok
@@ -36,7 +36,7 @@ A secure RESTful backend application for managing personal journal entries built
 
 ## 🔐 Security
 
-- JWT Authentication
+- JWT-based Authentication
 - Role-Based Authorization
 - Stateless Session Management
 - BCrypt Password Encryption
@@ -55,71 +55,32 @@ src
 ├── enums
 ├── exception
 ├── repository
-├── scheduler
 ├── service
 └── utils
 ```
 
 ---
 
-## ⚙️ Getting Started
+## 📌 API Documentation
 
-### 1. Clone the Repository
+Swagger UI:
 
-```bash
-git clone https://github.com/Arushi-ydv/journalApp.git
-```
-
-### 2. Configure Environment Variables
-
-Configure the following environment variables:
-
-- `MONGO_URI`
-- `JWT_SECRET`
-- `JWT_EXPIRATION`
-- `EMAIL_USER`
-- `EMAIL_PASS`
-
-### 3. Build and Run
-
-Using Maven:
-
-```bash
-mvn spring-boot:run
-```
-
-Or run the `JournalApplication.java` file directly from your IDE.
+[http://localhost:8080/journal/swagger-ui/index.html](http://localhost:8080/journal/swagger-ui/index.html)
 
 ---
 
-## 📖 API Documentation
+## 🗄️ Database
 
-After starting the application, access Swagger UI:
+MySQL is used as the database with Spring Data JPA and Hibernate.
 
-```text
-http://localhost:8080/journal/swagger-ui/index.html
-```
+Main tables:
 
-OpenAPI Specification:
-
-```text
-http://localhost:8080/journal/v3/api-docs
-```
+- `users`
+- `user_roles`
+- `journal_entries`
 
 ---
 
-## 📌 Future Improvements
-
-- DTO Refactoring for all APIs
-- Pagination & Sorting
-- Search APIs
-- Docker Support
-- Cloud Deployment
-
----
-
-## 👩‍💻 Author
+## 👤 Author
 
 **Arushi Yadav**
-
-GitHub: https://github.com/Arushi-ydv

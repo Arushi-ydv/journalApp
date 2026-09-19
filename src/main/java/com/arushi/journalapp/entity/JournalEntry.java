@@ -1,20 +1,21 @@
 package com.arushi.journalapp.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 import com.arushi.journalapp.enums.Sentiment;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "journal_entries")
+@Entity
+@Table(name = "journal_entries")
 @Data
 @NoArgsConstructor
 public class JournalEntry {
 
     @Id
-    private ObjectId  id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NonNull
     private String title;
 
@@ -22,5 +23,11 @@ public class JournalEntry {
 
     private LocalDateTime date;
 
+    @Enumerated(EnumType.STRING)
     private Sentiment sentiment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @ToString.Exclude
+    private User user;
 }

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import com.arushi.journalapp.entity.User;
 import com.arushi.journalapp.exception.UserAlreadyExistsException;
 import com.arushi.journalapp.repository.UserRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ public class UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER"));
-        user.setSentimentAnalysis(false);
         userRepository.save(user);
     }
 
@@ -57,12 +55,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(ObjectId id) {
+    public Optional<User> findById(Long id) {
 
         return userRepository.findById(id);
     }
 
-    public void deleteById(ObjectId id) {
+    public void deleteById(Long id) {
 
         userRepository.deleteById(id);
     }

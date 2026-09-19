@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import com.arushi.journalapp.entity.JournalEntry;
 import com.arushi.journalapp.entity.User;
 import com.arushi.journalapp.repository.JournalEntryRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +27,7 @@ public class JournalEntryService {
         try {
             User user = userService.findByUserName(userName);
             journalEntry.setDate(LocalDateTime.now());
+            journalEntry.setUser(user);
             JournalEntry saved = journalEntryRepository.save(journalEntry);
             user.getJournalEntries().add(saved);
             userService.saveUser(user);
@@ -46,13 +46,13 @@ public class JournalEntryService {
         return journalEntryRepository.findAll();
     }
 
-    public Optional<JournalEntry> findById(ObjectId id) {
+    public Optional<JournalEntry> findById(Long id) {
 
         return journalEntryRepository.findById(id);
     }
 
     @Transactional
-    public boolean deleteById(ObjectId id, String userName) {
+    public boolean deleteById(Long id, String userName) {
         boolean removed = false;
         try {
             User user = userService.findByUserName(userName);
