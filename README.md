@@ -1,53 +1,111 @@
-# Journal Application 🚀
+# JournalApp
 
-A secure RESTful backend application for managing personal journal entries, built with Spring Boot. The application provides JWT-based authentication, role-based authorization, journal management APIs, request validation, global exception handling, and interactive API documentation using Swagger OpenAPI.
+A secure RESTful backend application for managing personal journal entries, built with Java and Spring Boot. The application provides JWT-based authentication, role-based authorization, journal entry management, request validation, global exception handling, and interactive API documentation.
 
----
+## Features
 
-## 🚀 Features
-
-- User Registration & Login
-- JWT-based Authentication & Authorization
+- User Registration and Login
+- JWT-based Authentication and Authorization
 - Role-Based Access Control (User/Admin)
 - Secure Password Encryption using BCrypt
-- CRUD Operations for Journal Entries
-- MySQL Database Integration using Spring Data JPA
+- Create, Read, Update, and Delete Journal Entries
+- MySQL Database Integration using Spring Data JPA and Hibernate
 - Request Validation
 - Global Exception Handling
-- Interactive API Documentation using Swagger OpenAPI
-- Layered Architecture (Controller → Service → Repository)
+- Protected REST APIs
+- Interactive API Documentation using Swagger/OpenAPI
+- API Testing using Postman
+- Layered Backend Architecture
 
----
+## Technologies Used
 
-## 🛠️ Tech Stack
+### Backend
 
 - Java 21
 - Spring Boot 3
 - Spring Security
 - Spring Data JPA
 - Hibernate
-- MySQL
 - JWT (JSON Web Token)
-- Swagger OpenAPI
+
+### Database
+
+- MySQL
+
+### API Documentation & Testing
+
+- Swagger/OpenAPI
+- Postman
+
+### Build & Development Tools
+
 - Maven
 - Lombok
 
----
+## Architecture
 
-## 🔐 Security
-
-- JWT-based Authentication
-- Role-Based Authorization
-- Stateless Session Management
-- BCrypt Password Encryption
-- Protected REST APIs
-
----
-
-## 📂 Project Structure
+JournalApp follows a layered backend architecture that separates request handling, business logic, and data access.
 
 ```text
-src
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+MySQL Database
+```
+
+### Main Components
+
+- **Controllers** – Handle REST API requests and responses.
+- **Services** – Implement business logic and application operations.
+- **Repositories** – Handle database access using Spring Data JPA.
+- **DTOs** – Transfer data between API layers.
+- **Entities** – Represent application data and database records.
+- **Configuration** – Contains application and security configuration.
+- **Exceptions** – Handles application-specific and global exceptions.
+- **Utils** – Contains supporting utility components.
+
+## Security
+
+Spring Security is used to secure the application's REST APIs.
+
+- JWT-based authentication
+- Role-based authorization for User and Admin roles
+- Stateless session management
+- BCrypt password encryption
+- Protected API endpoints
+
+## API Documentation
+
+The REST APIs are documented using Swagger/OpenAPI.
+
+After starting the application, Swagger UI can be accessed locally at:
+
+```text
+/journal/swagger-ui/index.html
+```
+
+Swagger provides an interactive interface for viewing and testing the available API endpoints.
+
+## Database
+
+JournalApp uses MySQL for persistent data storage.
+
+Spring Data JPA and Hibernate are used for object-relational mapping and database operations.
+
+### Main Tables
+
+- `users`
+- `user_roles`
+- `journal_entries`
+
+## Project Structure
+
+```text
+src/main/java
+│
 ├── config
 ├── controller
 ├── dto
@@ -59,27 +117,36 @@ src
 └── utils
 ```
 
----
+## Getting Started
 
-## 📌 API Documentation
+### Prerequisites
 
-Swagger UI:
+- Java 21
+- Maven
+- MySQL
+- Git
 
-[http://localhost:8080/journal/swagger-ui/index.html](http://localhost:8080/journal/swagger-ui/index.html)
+### Setup
 
----
+1. Clone the repository.
+2. Create a MySQL database for the application.
+3. Configure the required database and application properties.
+4. Build the project using Maven.
+5. Run the Spring Boot application.
+6. Access the REST APIs through Swagger UI or test them using Postman.
 
-## 🗄️ Database
+## Configuration
 
-MySQL is used as the database with Spring Data JPA and Hibernate.
+Configure the required database and security properties in the application's configuration file.
 
-Main tables:
+Do not commit passwords, database credentials, JWT secrets, or other sensitive information to the repository.
 
-- `users`
-- `user_roles`
-- `journal_entries`
+## API Testing
 
----
+The REST APIs can be tested using:
+
+- Swagger/OpenAPI
+- Postman
 
 ## Author
 
