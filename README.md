@@ -1,6 +1,6 @@
 # Journal Application 🚀
 
-A secure RESTful backend application for managing personal journal entries built with Spring Boot. The application provides JWT-based authentication, role-based authorization, journal management APIs, request validation, global exception handling, and interactive API documentation using Swagger OpenAPI.
+A secure RESTful backend application for managing personal journal entries, built with Spring Boot. The application provides JWT-based authentication, role-based authorization, journal management APIs, request validation, global exception handling, and interactive API documentation using Swagger OpenAPI.
 
 ---
 
@@ -81,6 +81,6 @@ Main tables:
 
 ---
 
-## 👤 Author
+## Author
 
 **Arushi Yadav**

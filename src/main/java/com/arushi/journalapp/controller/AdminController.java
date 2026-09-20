@@ -3,7 +3,6 @@ package com.arushi.journalapp.controller;
 import com.arushi.journalapp.dto.UserResponse;
 import com.arushi.journalapp.entity.User;
 import com.arushi.journalapp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,11 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AdminController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/all-users")
     public ResponseEntity<List<UserResponse>> getAllUsers() {

@@ -10,7 +10,6 @@ import com.arushi.journalapp.entity.User;
 import com.arushi.journalapp.service.UserDetailsServiceImpl;
 import com.arushi.journalapp.service.UserService;
 import com.arushi.journalapp.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,17 +22,20 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class PublicController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    public PublicController(AuthenticationManager authenticationManager,
+                            UserDetailsServiceImpl userDetailsService,
+                            UserService userService,
+                            JwtUtil jwtUtil) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+    }
 
     @GetMapping("/health-check")
     public String healthCheck(){
@@ -59,7 +61,7 @@ public class PublicController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));

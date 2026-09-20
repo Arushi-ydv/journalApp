@@ -1,10 +1,8 @@
 package com.arushi.journalapp.service;
 
-import lombok.extern.slf4j.Slf4j;
 import com.arushi.journalapp.entity.JournalEntry;
 import com.arushi.journalapp.entity.User;
 import com.arushi.journalapp.repository.JournalEntryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,58 +11,76 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Slf4j
 public class JournalEntryService {
 
-    @Autowired
-    private JournalEntryRepository journalEntryRepository;
+    private final JournalEntryRepository journalEntryRepository;
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public JournalEntryService(JournalEntryRepository journalEntryRepository,
+                               UserService userService) {
+        this.journalEntryRepository = journalEntryRepository;
+        this.userService = userService;
+    }
 
     @Transactional
     public void saveEntry(JournalEntry journalEntry, String userName) {
-        try {
-            User user = userService.findByUserName(userName);
-            journalEntry.setDate(LocalDateTime.now());
-            journalEntry.setUser(user);
-            JournalEntry saved = journalEntryRepository.save(journalEntry);
-            user.getJournalEntries().add(saved);
-            userService.saveUser(user);
-        } catch (Exception e) {
-            log.error("Error while saving journal entry", e);
-            throw new RuntimeException("An error occured while saving the entry.", e);
-        }
+
+        User user = userService.findByUserName(userName);
+
+        journalEntry.setDate(LocalDateTime.now());
+        journalEntry.setUser(user);
+
+        JournalEntry savedEntry = journalEntryRepository.save(journalEntry);
+
+        user.getJournalEntries().add(savedEntry);
+        userService.saveUser(user);
     }
 
-    public void saveEntry(JournalEntry journalEntry) {
-        journalEntryRepository.save(journalEntry);
-    }
-
-    public List<JournalEntry> getAll() {
-
-        return journalEntryRepository.findAll();
-    }
-
-    public Optional<JournalEntry> findById(Long id) {
-
-        return journalEntryRepository.findById(id);
+    public List<JournalEntry> getAllEntriesByUser(String userName) {
+        return journalEntryRepository.findByUser_UserName(userName);
     }
 
     @Transactional
     public boolean deleteById(Long id, String userName) {
-        boolean removed = false;
-        try {
-            User user = userService.findByUserName(userName);
-            removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
-            if (removed) {
-                userService.saveUser(user);
-                journalEntryRepository.deleteById(id);
-            }
-        } catch (Exception e) {
-            log.error("Error ", e);
-            throw new RuntimeException("An error occured while deleting the entry.", e);
+
+        Optional<JournalEntry> entry =
+                journalEntryRepository.findByIdAndUser_UserName(id, userName);
+
+        if (entry.isEmpty()) {
+            return false;
         }
-        return removed;
+
+        journalEntryRepository.delete(entry.get());
+        return true;
+    }
+
+    public Optional<JournalEntry> findByIdForUser(Long id, String userName) {
+        return journalEntryRepository.findByIdAndUser_UserName(id, userName);
+    }
+
+    public Optional<JournalEntry> updateEntry(
+            Long id,
+            String userName,
+            String title,
+            String content) {
+
+        Optional<JournalEntry> optionalEntry =
+                journalEntryRepository.findByIdAndUser_UserName(id, userName);
+
+        if (optionalEntry.isEmpty()) {
+            return Optional.empty();
+        }
+
+        JournalEntry entry = optionalEntry.get();
+
+        if (title != null && !title.isBlank()) {
+            entry.setTitle(title);
+        }
+
+        if (content != null && !content.isBlank()) {
+            entry.setContent(content);
+        }
+
+        return Optional.of(journalEntryRepository.save(entry));
     }
 }
